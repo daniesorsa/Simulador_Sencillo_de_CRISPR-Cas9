@@ -63,12 +63,11 @@ public class ProyectoFinalP1_DanielSorto {
                     + "Identificaras la posición precisa (el índice) de la mutación en la secuencia para lograr una **Reparación Dirigida (HDR)**.\n\n" +
                            "¡Elige una de las siguientes mutaciones genéticas para cambiar el mundo!\n\n");
 
-            // Estructura de Iteración para generar el menú
             for(int i = 0; i < listaDeEnfermedades.size(); i++) {
-                // Se muestra i + 1, pero se usa i para acceder al ArrayList
-                System.out.println((i + 1) + ". " + listaDeEnfermedades.get(i).getNombre() + "\n");
+                System.out.println((i + 1) + ") " + listaDeEnfermedades.get(i).getNombre() + "\n");
             }
             System.out.println("0) Salir");
+            
             selMenu = sc.nextInt();
             switch(selMenu) {
                 case 1:
@@ -87,4 +86,12 @@ public class ProyectoFinalP1_DanielSorto {
             }
         }while(selMenu != 0);
      }
+    public static void validacion(int a, int b) {
+        System.out.println("Ingresa una opcion entre " + a + " y " + b +" :");
+        int num = sc.nextInt();
+        while(num < a || num > b) {
+            System.out.println("Opcion no valida intenta de nuevo: ");
+            num = sc.nextInt();
+        }
+    }
 }
