@@ -1,23 +1,22 @@
 package proyectofinalp1_danielsorto;
-
-import java.util.ArrayList;
-
 public class Mutacion {
-    String nombre;
-    String descripcion;
-    ArrayList<String> secuenciaActual = new ArrayList<>();
-    ArrayList<String> secuenciaCorrecta = new ArrayList<>();
-    int posMutacion;
+    private String nombre;
+    private String descripcion;
+    private char[] secuenciaMutada = null; //secuencia con una linea incorrecta, la segunda parte o la pareja de cada letra se llena automatico segun esta
+    private char[] secuenciaCorrecta = null;
+    private int posMutacion;
 
-    //constructores
+     //constructores
 
-    public Mutacion(String nombre, String descripcion, int posMutacion) {
+    public Mutacion(String nombre, String descripcion, char[] adnMutado, char[] adnCorrecto, int posMutacion) {
         this.nombre = nombre;
         this.descripcion = descripcion;
+        this.secuenciaMutada = adnMutado;
+        this.secuenciaCorrecta = adnCorrecto;
         this.posMutacion = posMutacion;
-    }
-    
-    //getters
+     }
+
+     //getters
 
     public String getNombre() {
         return nombre;
@@ -27,20 +26,17 @@ public class Mutacion {
         return descripcion;
     }
 
-    public ArrayList<String> getSecuenciaActual() {
-        return secuenciaActual;
+    public char[] getSecuenciaMutada() {
+        return secuenciaMutada;
     }
 
-    public ArrayList<String> getSecuenciaCorrecta() {
+    public char[] getSecuenciaCorrecta() {
         return secuenciaCorrecta;
     }
 
     public int getPosMutacion() {
         return posMutacion;
     }
-    
-    
-    //setters
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
@@ -50,29 +46,30 @@ public class Mutacion {
         this.descripcion = descripcion;
     }
 
-    public void setSecuenciaActual(ArrayList<String> secuenciaActual) {
-        this.secuenciaActual = secuenciaActual;
+    public void setSecuenciaMutada(char[] secuenciaMutada) {
+        this.secuenciaMutada = secuenciaMutada;
     }
 
-    public void setSecuenciaCorrecta(ArrayList<String> secuenciaCorrecta) {
+    public void setSecuenciaCorrecta(char[] secuenciaCorrecta) {
         this.secuenciaCorrecta = secuenciaCorrecta;
     }
 
     public void setPosMutacion(int posMutacion) {
         this.posMutacion = posMutacion;
     }
-    
-    
-    //metodos
-    
-    
+
+
+
+     //metodos
+
+
         //toString
-    @Override
-    public String toString() {
-        return "Nombre de la Mutación: " + nombre + "\nDescripcion: " + descripcion + "\nSecuenciaActual: " + secuenciaActual;
-    }
-    
+    //toString
+     @Override
+     public String toString() {
+        return "Nombre de la Mutación: " + nombre + "\nDescripcion: " + descripcion;// + "\nSecuenciaMutada: " + secuenciaMutada;
+     }
+
     // metodo para verificar corte
         // si es correcto solo se hace y copia en secuencia correcta, si no se explica y se corrige
-    
 }
