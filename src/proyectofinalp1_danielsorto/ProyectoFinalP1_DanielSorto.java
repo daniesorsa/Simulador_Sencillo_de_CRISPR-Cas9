@@ -1,4 +1,4 @@
- package proyectofinalp1_danielsorto;
+package proyectofinalp1_danielsorto;
 
 import java.util.ArrayList;
 import java.util.Scanner;

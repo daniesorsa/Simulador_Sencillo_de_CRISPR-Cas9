@@ -17,59 +17,19 @@ public class Mutacion {
      }
 
      //getters
-
     public String getNombre() {
         return nombre;
     }
-
     public String getDescripcion() {
         return descripcion;
     }
-
     public char[] getSecuenciaMutada() {
         return secuenciaMutada;
     }
-
     public char[] getSecuenciaCorrecta() {
         return secuenciaCorrecta;
     }
-
     public int getPosMutacion() {
         return posMutacion;
     }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public void setSecuenciaMutada(char[] secuenciaMutada) {
-        this.secuenciaMutada = secuenciaMutada;
-    }
-
-    public void setSecuenciaCorrecta(char[] secuenciaCorrecta) {
-        this.secuenciaCorrecta = secuenciaCorrecta;
-    }
-
-    public void setPosMutacion(int posMutacion) {
-        this.posMutacion = posMutacion;
-    }
-
-
-
-     //metodos
-
-
-        //toString
-    //toString
-     @Override
-     public String toString() {
-        return "Nombre de la Mutación: " + nombre + "\nDescripcion: " + descripcion;// + "\nSecuenciaMutada: " + secuenciaMutada;
-     }
-
-    // metodo para verificar corte
-        // si es correcto solo se hace y copia en secuencia correcta, si no se explica y se corrige
 }
