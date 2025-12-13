@@ -58,10 +58,7 @@ public class ProyectoFinalP1_DanielSorto {
         ));
         int selMenu = 0;
         do {
-            System.out.println("¡Bienvenido al Laboratorio de Ingenieria Genetica con CRISPR-Cas9!\n\n" +
-                           "Tu trabajo será ser el **ARN Guía (gRNA)** para la proteína Cas9. "
-                    + "Identificaras la posición precisa (el índice) de la mutación en la secuencia para lograr una **Reparación Dirigida (HDR)**.\n\n" +
-                           "¡Elige una de las siguientes mutaciones genéticas para cambiar el mundo!\n\n");
+            System.out.println("¡Bienvenido al Laboratorio de Ingenieria Genetica con CRISPR-Cas9! Tu trabajo será ser el **ARN Guía (gRNA)** para la proteína Cas9. Identificaras la posición precisa (el índice) de la mutación en la secuencia para lograr una **Reparación Dirigida (HDR)** ¡Elige una de las siguientes mutaciones genéticas para cambiar el mundo!\n\n");
 
             for(int i = 0; i < listaDeEnfermedades.size(); i++) {
                 System.out.println((i + 1) + ") " + listaDeEnfermedades.get(i).getNombre() + "\n");
