@@ -9,7 +9,8 @@ public class MainFrame extends javax.swing.JFrame {
     // new form MainFrame
     public MainFrame() {
         initComponents();
-        
+        cargarDatos();
+        this.setLocationRelativeTo(null);
     }
 
     @SuppressWarnings("unchecked")
@@ -235,4 +236,28 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JTextArea txtAreaAdn;
     private javax.swing.JTextArea txtInfoCaso;
     // End of variables declaration//GEN-END:variables
+    
+    //  ------ Metodos ------
+    public void cargarDatos() {
+        char[] falciformeMutada = {'G', 'A', 'T', 'C', 'G', 'T', 'A', 'T', 'C'};
+        char[] falciformeSana =   {'G', 'A', 'T', 'C', 'G', 'A', 'A', 'T', 'C'};
+        listaDeEnfermedades.add(new Mutacion("Anemia Falciforme", 
+            "Cambio de Timina (T) por Adenina (A) en pos 5.", falciformeMutada, falciformeSana, 5));
+
+        char[] talasemiaMutada = {'A', 'T', 'G', 'A', 'A', 'C', 'T', 'A'};
+        char[] talasemiaSana =   {'A', 'T', 'G', 'G', 'A', 'C', 'T', 'A'};
+        listaDeEnfermedades.add(new Mutacion("Beta Talasemia", 
+            "Cambio de A por G en pos 3.", talasemiaMutada, talasemiaSana, 3));
+
+        char[] amiloidosisMutada = {'T', 'A', 'G', 'T', 'T', 'C', 'G'};
+        char[] amiloidosisSana =   {'T', 'A', 'C', 'T', 'T', 'C', 'G'};
+        listaDeEnfermedades.add(new Mutacion("Amiloidosis hATTR", 
+            "Cambio de G por C en pos 2.", amiloidosisMutada, amiloidosisSana, 2));
+
+        char[] fibrosisMutada = {'A', 'T', 'C', 'A', 'T', 'A', 'C', 'G'};
+        char[] fibrosisSana =   {'A', 'T', 'C', 'A', 'T', 'A', 'G', 'G'};
+        listaDeEnfermedades.add(new Mutacion("Fibrosis Quística", 
+            "Corrección C por G en pos 6.", fibrosisMutada, fibrosisSana, 6));
+    }
+
 }
