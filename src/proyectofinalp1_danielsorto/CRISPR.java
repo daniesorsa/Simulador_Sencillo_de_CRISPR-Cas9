@@ -6,10 +6,11 @@ public class CRISPR {
             case 'T': return 'A';
             case 'C': return 'G';
             case 'G': return 'C';
-            default: return 'X'; // retorna error si no es A, T, C, o G
+            default: return 'X'; // retorna "error" si no es A, T, C, o G
         }
     }
     public static int contarBaseRecursivo(char[] secuencia, char baseBuscada, int indice) {
+        // indice empieza en la ultima pos
         if (indice < 0) return 0;
         
         int match = (Character.toUpperCase(secuencia[indice]) == Character.toUpperCase(baseBuscada)) ? 1 : 0;

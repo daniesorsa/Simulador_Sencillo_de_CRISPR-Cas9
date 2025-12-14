@@ -1,16 +1,49 @@
 package proyectofinalp1_danielsorto;
+import java.util.Random;
 import java.util.ArrayList;
 public class MainFrame extends javax.swing.JFrame {
+    Random rnd = new Random();
     ArrayList<Mutacion> listaDeEnfermedades = new java.util.ArrayList<>();
     Mutacion mutacionActual;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainFrame.class.getName());
     
-    
-    // new form MainFrame
     public MainFrame() {
         initComponents();
         cargarDatos();
         this.setLocationRelativeTo(null);
+    }
+    // --- sim ---
+    public void iniciarSimulacion(int indiceEnfermedad) {
+        this.mutacionActual = listaDeEnfermedades.get(indiceEnfermedad);
+        
+        //  textos
+        txtInfoCaso.setText("CASO: " + mutacionActual.getNombre() + "\n\n" + mutacionActual.getDescripcion());
+        
+        String adnVisual = matrizAdn(mutacionActual.getSecuenciaMutada(), true);
+        txtAreaADN.setText(adnVisual);
+
+        // recursividad - mejorar para cada caso y no solo 'A'
+        int conteo = CRISPR.contarBaseRecursivo(mutacionActual.getSecuenciaMutada(), 'A', mutacionActual.getSecuenciaMutada().length - 1);
+        lblEstadistica.setText("Pista: Se encontraron " + conteo + " Adeninas en la muestra.");
+
+        // cambiar a pantalla
+        java.awt.CardLayout card = (java.awt.CardLayout) panelPrincipal.getLayout();
+        card.show(panelPrincipal, "SIMULACION"); 
+    }
+
+    // --- ver ADN ---
+    public String matrizAdn(char[] secuencia, boolean mostrarIndices) {
+        StringBuilder sb = new StringBuilder();
+        if (mostrarIndices) {
+            sb.append("Indices:   ");
+            for (int i = 0; i < secuencia.length; i++) sb.append(i).append("  ");
+            sb.append("\n");
+        }
+        sb.append("Cadena M:  ");
+        for (char base : secuencia) sb.append(base).append("  ");
+        sb.append("\nComplem.:  "); // Abreviado para que quepa
+        for (char base : secuencia) sb.append(CRISPR.complementoDeAdn(base)).append("  ");
+        return sb.toString();
     }
 
     @SuppressWarnings("unchecked")
@@ -26,11 +59,17 @@ public class MainFrame extends javax.swing.JFrame {
         pnlSimulacion = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtInfoCaso = new javax.swing.JTextArea();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        txtAreaAdn = new javax.swing.JTextArea();
         lblEstadistica = new javax.swing.JLabel();
         btnCorte = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtAreaADN = new javax.swing.JTextArea();
         pnlMenu = new javax.swing.JPanel();
+        btnAnemia = new javax.swing.JButton();
+        btnTalasemia = new javax.swing.JButton();
+        btnAmiloidosis = new javax.swing.JButton();
+        btnFibrosis = new javax.swing.JButton();
+        btnRandom = new javax.swing.JButton();
+        btnReporte = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -54,6 +93,7 @@ public class MainFrame extends javax.swing.JFrame {
         jTextArea1.setLineWrap(true);
         jTextArea1.setRows(5);
         jTextArea1.setText("¡Bienvenido al Laboratorio de Ingenieria Genetica con CRISPR-Cas9! Tu seras el **ARN Guía (gRNA)** para la proteína Cas9. Selecciona un mutacion y ve y cambia el mundo!");
+        jTextArea1.setToolTipText("");
 
         btnEntrar.setBackground(new java.awt.Color(0, 153, 153));
         btnEntrar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -98,15 +138,18 @@ public class MainFrame extends javax.swing.JFrame {
 
         panelPrincipal.add(pnlInicio, "card2");
 
+        pnlSimulacion.setLayout(new java.awt.BorderLayout());
+
+        jScrollPane1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+
         txtInfoCaso.setColumns(20);
         txtInfoCaso.setRows(5);
         jScrollPane1.setViewportView(txtInfoCaso);
 
-        txtAreaAdn.setColumns(20);
-        txtAreaAdn.setRows(5);
-        jScrollPane2.setViewportView(txtAreaAdn);
+        pnlSimulacion.add(jScrollPane1, java.awt.BorderLayout.NORTH);
 
         lblEstadistica.setText("jLabel2");
+        pnlSimulacion.add(lblEstadistica, java.awt.BorderLayout.SOUTH);
 
         btnCorte.setText("jButton1");
         btnCorte.addActionListener(new java.awt.event.ActionListener() {
@@ -114,72 +157,64 @@ public class MainFrame extends javax.swing.JFrame {
                 btnCorteActionPerformed(evt);
             }
         });
+        pnlSimulacion.add(btnCorte, java.awt.BorderLayout.SOUTH);
 
-        javax.swing.GroupLayout pnlSimulacionLayout = new javax.swing.GroupLayout(pnlSimulacion);
-        pnlSimulacion.setLayout(pnlSimulacionLayout);
-        pnlSimulacionLayout.setHorizontalGroup(
-            pnlSimulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-            .addGroup(pnlSimulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(pnlSimulacionLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-            .addGroup(pnlSimulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(pnlSimulacionLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-            .addGroup(pnlSimulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(pnlSimulacionLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(lblEstadistica)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-            .addGroup(pnlSimulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(pnlSimulacionLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(btnCorte)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
-        pnlSimulacionLayout.setVerticalGroup(
-            pnlSimulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-            .addGroup(pnlSimulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(pnlSimulacionLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-            .addGroup(pnlSimulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(pnlSimulacionLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-            .addGroup(pnlSimulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(pnlSimulacionLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(lblEstadistica)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-            .addGroup(pnlSimulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(pnlSimulacionLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(btnCorte)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
+        txtAreaADN.setColumns(20);
+        txtAreaADN.setRows(5);
+        jScrollPane2.setViewportView(txtAreaADN);
 
-        panelPrincipal.add(pnlSimulacion, "card4");
+        pnlSimulacion.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
-        javax.swing.GroupLayout pnlMenuLayout = new javax.swing.GroupLayout(pnlMenu);
-        pnlMenu.setLayout(pnlMenuLayout);
-        pnlMenuLayout.setHorizontalGroup(
-            pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        pnlMenuLayout.setVerticalGroup(
-            pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        panelPrincipal.add(pnlSimulacion, "SIMULACION");
 
-        panelPrincipal.add(pnlMenu, "card3");
+        pnlMenu.setLayout(new java.awt.GridLayout(6, 1));
+
+        btnAnemia.setText("1. Anemia Falciforme");
+        btnAnemia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnemiaActionPerformed(evt);
+            }
+        });
+        pnlMenu.add(btnAnemia);
+
+        btnTalasemia.setText("2. Talasemia");
+        btnTalasemia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTalasemiaActionPerformed(evt);
+            }
+        });
+        pnlMenu.add(btnTalasemia);
+
+        btnAmiloidosis.setText("3. Amiloidosis hATTR  ");
+        pnlMenu.add(btnAmiloidosis);
+
+        btnFibrosis.setText("4. Fibrosis Quística");
+        btnFibrosis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFibrosisActionPerformed(evt);
+            }
+        });
+        pnlMenu.add(btnFibrosis);
+
+        btnRandom.setBackground(new java.awt.Color(204, 153, 0));
+        btnRandom.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnRandom.setText("5. ¡RANDOM!");
+        btnRandom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRandomActionPerformed(evt);
+            }
+        });
+        pnlMenu.add(btnRandom);
+
+        btnReporte.setText("6. Reporte en Consola");
+        btnReporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReporteActionPerformed(evt);
+            }
+        });
+        pnlMenu.add(btnReporte);
+
+        panelPrincipal.add(pnlMenu, "MENU");
 
         getContentPane().add(panelPrincipal, java.awt.BorderLayout.CENTER);
 
@@ -187,12 +222,84 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
-        // TODO add your handling code here:
+        java.awt.CardLayout card = (java.awt.CardLayout) panelPrincipal.getLayout();
+        card.show(panelPrincipal, "MENU");
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     private void btnCorteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCorteActionPerformed
-        // TODO add your handling code here:
+                                     
+        String entrada = javax.swing.JOptionPane.showInputDialog(this, 
+                "Observa los indices arriba de la cadena.\nIngresa el NÚMERO donde inicia la mutación:", 
+                "Panel de Control Cas9", 
+                javax.swing.JOptionPane.QUESTION_MESSAGE);
+
+        // val
+        if (entrada != null && !entrada.isEmpty()) {
+            try {
+                int indiceUsuario = Integer.parseInt(entrada);
+
+                //  comprobar
+                if (indiceUsuario == mutacionActual.getPosMutacion()) {
+                    
+                    // --- Lo identifico correctamente ---
+                    java.awt.Toolkit.getDefaultToolkit().beep(); // sonido
+
+                    String adnSano = matrizAdn(mutacionActual.getSecuenciaCorrecta(), false);
+                    txtAreaADN.setText("--- ¡CORTE EXITOSO! ---\n\nSecuencia Reparada (HDR):\n" + adnSano);
+                    
+                    // parpadeo verde para ganador
+                    txtAreaADN.setBackground(new java.awt.Color(200, 255, 200));
+                    javax.swing.JOptionPane.showMessageDialog(this, "¡Felicidades! Has curado la " + mutacionActual.getNombre());
+                    
+                    int opcion = javax.swing.JOptionPane.showConfirmDialog(this, 
+                            "Misión cumplida. ¿Deseas volver al menú principal?", 
+                            "Sistema CRISPR", 
+                            javax.swing.JOptionPane.YES_NO_OPTION);
+                            
+                    if(opcion == javax.swing.JOptionPane.YES_OPTION){
+                         java.awt.CardLayout card = (java.awt.CardLayout) panelPrincipal.getLayout();
+                         card.show(panelPrincipal, "MENU");
+                         txtAreaADN.setBackground(java.awt.Color.WHITE);
+                    }
+
+                } else {
+                    // --- Corte incorrecto ---
+                    txtAreaADN.setBackground(new java.awt.Color(255, 200, 200)); // color rojo para cuando no se identifica
+                    javax.swing.JOptionPane.showMessageDialog(this, 
+                            "¡FALLO EN EL CORTE!\nIntentaste cortar en posición " + indiceUsuario + 
+                            "\nPero la mutación estaba en: " + mutacionActual.getPosMutacion(), 
+                            "Error de Cas9", javax.swing.JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (NumberFormatException e) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Error: Debes ingresar un número entero válido.");
+            }
+        }
     }//GEN-LAST:event_btnCorteActionPerformed
+
+    private void btnAnemiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnemiaActionPerformed
+        iniciarSimulacion(0);
+    }//GEN-LAST:event_btnAnemiaActionPerformed
+
+    private void btnTalasemiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTalasemiaActionPerformed
+        iniciarSimulacion(1);
+    }//GEN-LAST:event_btnTalasemiaActionPerformed
+
+    private void btnFibrosisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFibrosisActionPerformed
+        iniciarSimulacion(3);
+    }//GEN-LAST:event_btnFibrosisActionPerformed
+
+    private void btnRandomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRandomActionPerformed
+        int indiceAlAzar = rnd.nextInt(listaDeEnfermedades.size());
+        iniciarSimulacion(indiceAlAzar);
+    }//GEN-LAST:event_btnRandomActionPerformed
+
+    private void btnReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteActionPerformed
+        System.out.println("--- Reporte ---");
+        for(Mutacion m : listaDeEnfermedades){
+            System.out.printf("Enfermedad: %-20s [Corte en: %d]%n", m.getNombre(), m.getPosMutacion());
+        }
+        javax.swing.JOptionPane.showMessageDialog(this, "Reporte generado en la consola (Output).");
+    }//GEN-LAST:event_btnReporteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -221,8 +328,14 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAmiloidosis;
+    private javax.swing.JButton btnAnemia;
     private javax.swing.JButton btnCorte;
     private javax.swing.JButton btnEntrar;
+    private javax.swing.JButton btnFibrosis;
+    private javax.swing.JButton btnRandom;
+    private javax.swing.JButton btnReporte;
+    private javax.swing.JButton btnTalasemia;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -233,7 +346,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel pnlInicio;
     private javax.swing.JPanel pnlMenu;
     private javax.swing.JPanel pnlSimulacion;
-    private javax.swing.JTextArea txtAreaAdn;
+    private javax.swing.JTextArea txtAreaADN;
     private javax.swing.JTextArea txtInfoCaso;
     // End of variables declaration//GEN-END:variables
     
