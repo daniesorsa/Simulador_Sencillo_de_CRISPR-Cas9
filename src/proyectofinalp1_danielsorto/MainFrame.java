@@ -37,15 +37,24 @@ public class MainFrame extends javax.swing.JFrame {
     // --- ver ADN ---
     public String matrizAdn(char[] secuencia, boolean mostrarIndices) {
         String output = "";
+        char[][] matrizAdn = new char[2][secuencia.length];
+        for(int i = 0; i< secuencia.length; i++) {
+            matrizAdn[0][i] = secuencia[i];
+            matrizAdn[1][i] = CRISPR.complementoDeAdn(secuencia[i]); // devuelve la base complementaria
+        }
         if (mostrarIndices) {
             output += ("Indices:   ");
             for (int i = 0; i < secuencia.length; i++) output += i + " ";
             output += "\n";
         }
         output += "Cadena M:  ";
-        for (char base : secuencia) output += base + " ";
-        output += "\nComplem.:  "; // Abreviado para que quepa - mismo tamaño
-        for (char base : secuencia) output += (CRISPR.complementoDeAdn(base)) + "  ";
+        for(int i = 0; i < 2;i++) {
+            for(int j = 0; j < secuencia.length; j++) {
+                output += matrizAdn[i][j] + "  ";
+            }
+            if(i==1) break;
+            output += "\nComplem.:  ";
+        }
         return output;
     }
 
