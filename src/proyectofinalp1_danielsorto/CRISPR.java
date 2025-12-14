@@ -12,7 +12,6 @@ public class CRISPR {
     public static int contarBaseRecursivo(char[] secuencia, char baseBuscada, int indice) {
         // indice empieza en la ultima pos
         if (indice < 0) return 0;
-        
         int match = (Character.toUpperCase(secuencia[indice]) == Character.toUpperCase(baseBuscada)) ? 1 : 0;
         return match + contarBaseRecursivo(secuencia, baseBuscada, indice - 1);
     }
