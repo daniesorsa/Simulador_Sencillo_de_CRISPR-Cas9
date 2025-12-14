@@ -303,10 +303,11 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void btnReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteActionPerformed
         System.out.println("--- Reporte ---");
-        for(Mutacion m : listaDeEnfermedades){
-            System.out.printf("Enfermedad: %-20s [Corte en: %d]%n", m.getNombre(), m.getPosMutacion());
-        }
-        javax.swing.JOptionPane.showMessageDialog(this, "Reporte generado en la consola (Output).");
+        System.out.print("Seleccione una enfermedad para mostrar la respuesta(0-4): ");
+        int selIdx = sc.nextInt();
+        sc.nextLine();
+        System.out.printf("Enfermedad: %-20s [Corte en: %d]%n", listaDeEnfermedades.get(selIdx).getNombre(), listaDeEnfermedades.get(selIdx).getPosMutacion());
+        javax.swing.JOptionPane.showMessageDialog(this, "Reporte generado en la consola.");
     }//GEN-LAST:event_btnReporteActionPerformed
 
     private void btnAmiloidosisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAmiloidosisActionPerformed
